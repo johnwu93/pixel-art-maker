@@ -1,0 +1,24 @@
+{
+  "rules": {
+    "color-hex-case": "lower",
+    "selector-type-case": "lower",
+    "property-case": "lower",
+    "string-quotes": "double",
+    "shorthand-property-no-redundant-values": true,
+    "font-family-name-quotes": null,
+    "number-leading-zero": "always",
+    "length-zero-no-unit": true,
+    "number-no-trailing-zeros": true,
+    "unit-no-unknown": true,
+    "color-hex-length": "short",
+    "value-list-comma-newline-after": null,
+    "no-duplicate-selectors": true,
+    "comment-no-empty": true,
+    "selector-max-id": 0,
+    "selector-list-comma-newline-after": "always",
+    "no-eol-whitespace": true,
+    "no-missing-end-of-source-newline": true,
+    "function-url-quotes": "never",
+    "color-named": "always-where-possible"
+  }
+}

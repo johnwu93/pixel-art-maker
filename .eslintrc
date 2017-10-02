@@ -1,0 +1,24 @@
+{
+  "extends": "airbnb",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "env": {
+    "browser": true,
+    "es6": true,
+    "jasmine": true
+  },
+  "rules": {
+    "eol-last": 2,
+    "guard-for-in": "error",
+    "object-curly-spacing": 0,
+    "comma-dangle": [
+      "error",
+      {
+        "functions": "ignore",
+        "arrays": "always-multiline"
+      }
+    ]
+  }
+}
