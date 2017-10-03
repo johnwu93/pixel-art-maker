@@ -5,6 +5,7 @@ import { createCanvas } from './models/canvas';
 import CanvasController from './controllers/canvascontroller';
 import CurrentColorController from './controllers/currentcolorcontroller';
 import CanvasView from './views/canvasview';
+import ColorView from './views/colorview';
 
 $(() => {
   const currentColor = createPixel('black');
@@ -15,7 +16,9 @@ $(() => {
   const currentColorController = new CurrentColorController(currentColor);
 
   const canvasView = new CanvasView(canvasController, currentColorController);
+  const colorView = new ColorView(currentColorController);
   canvasView.render();
 
-  canvasView.callClickPixelListener();
+  canvasView.callListener();
+  colorView.callListener();
 });

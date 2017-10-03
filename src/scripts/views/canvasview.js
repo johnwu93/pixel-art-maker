@@ -30,13 +30,13 @@ export default class CanvasView {
     this.canvasController.setPixel(rowIdx, columnIdx, this.currentColorController.currentColor);
   }
 
-  callClickPixelListener() {
+  callListener() {
     $('#pixel_canvas').on('click', 'td', (event) => {
-      const tableElement = event.target;
-      const stringId = $(tableElement).attr('class');
+      const tableElement = $(event.target);
+      const stringId = tableElement.attr('class');
       const [rowIdx, colIdx] = parseIndex(stringId);
       this.changeColor(rowIdx, colIdx);
-      $(tableElement).css('background-color', this.currentColorController.currentColor);
+      tableElement.css('background-color', this.currentColorController.currentColor);
     });
   }
 }
