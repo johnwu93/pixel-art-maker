@@ -27,11 +27,12 @@ export default class GridSizeView {
   }
 
   callListener() {
-    $('#sizePicker').change((sizePickerEvent) => {
+    $('#sizePicker').submit((sizePickerEvent) => {
       const inputs = extractInputs(sizePickerEvent);
+      const newRowColumns = extractInputNumberValues(inputs, '#input_height');
+      const newColumnNums = extractInputNumberValues(inputs, '#input_width');
 
-      this.changeRowSize(inputs);
-      this.changeColumnSize(inputs);
+      this.canvasController.setDimensions(newRowColumns, newColumnNums);
 
       this.canvasView.render();
     });

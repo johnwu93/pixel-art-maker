@@ -6,10 +6,6 @@ class Pixel {
   getColor() {
     return this.colorString;
   }
-
-  setColor(value) {
-    this.colorString = value;
-  }
 }
 
 const createPixel = function createPixel(color) {
@@ -20,8 +16,22 @@ const createWhitePixel = function createWhitePixel() {
   return createPixel('white');
 };
 
-const copyPixel = function copyPixel(color) {
-  return createPixel(color.getColor());
+const createPixelMatrix = function createPixelMatrix(colorStringMatrix) {
+  return colorStringMatrix.map(row => row.map(elem => createPixel(elem)));
 };
 
-export { createPixel, createWhitePixel, copyPixel };
+const createWhitePixelArray = function createWhitePixelArray(size) {
+  return Array.from({length: size}, () => createWhitePixel());
+};
+
+const createWhitePixelMatrix = function createWhitePixelMatrix(numRows, numCols) {
+  return Array.from({length: numRows}, () => createWhitePixelArray(numCols));
+};
+
+export {
+  createPixel,
+  createWhitePixel,
+  createPixelMatrix,
+  createWhitePixelArray,
+  createWhitePixelMatrix
+};

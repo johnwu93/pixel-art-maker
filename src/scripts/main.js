@@ -1,7 +1,8 @@
 import $ from 'jquery';
 
 import { createPixel } from './models/pixel';
-import { createCanvas } from './models/canvas';
+import { createCanvas } from './models/canvas/canvas';
+import createCachedCanvas from './models/canvas/cachedcanvas';
 import CanvasController from './controllers/canvascontroller';
 import CurrentColorController from './controllers/currentcolorcontroller';
 import CanvasView from './views/canvasview';
@@ -13,7 +14,9 @@ $(() => {
   const canvasMatrix = [['red', 'white', 'blue'],
     ['orange', 'green', 'black']];
   const canvas = createCanvas(canvasMatrix);
-  const canvasController = new CanvasController(canvas);
+  const cachedCanvas = createCachedCanvas(canvas);
+
+  const canvasController = new CanvasController(cachedCanvas);
   const currentColorController = new CurrentColorController(currentColor);
 
   const canvasView = new CanvasView(canvasController, currentColorController);

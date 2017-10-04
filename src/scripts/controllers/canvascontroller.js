@@ -1,5 +1,5 @@
 import { createPixel } from '../models/pixel';
-
+import { convertToStringMatrix } from '../models/canvas/canvas';
 
 export default class CanvasController {
   constructor(canvasModel) {
@@ -15,16 +15,14 @@ export default class CanvasController {
   }
 
   setPixel(rowIndex, colIndex, colorString) {
-    this.canvasModel.pixelMatrix[rowIndex][colIndex] = createPixel(colorString);
+    this.canvasModel.setPixel(rowIndex, colIndex, createPixel(colorString));
   }
 
-  getPixel(rowIndex, colIndex) {
-    return this.canvasModel.pixelMatrix[rowIndex][colIndex];
+  setDimensions(rowSize, columnSize) {
+    this.canvasModel.setDimensions(rowSize, columnSize);
   }
 
   getCanvas() {
-    return this.canvasModel.pixelMatrix.map(
-      row => row.map(pixel => pixel.getColor())
-    );
+    return convertToStringMatrix(this.canvasModel);
   }
 }

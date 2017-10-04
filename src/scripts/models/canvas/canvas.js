@@ -1,4 +1,4 @@
-import { createWhitePixel, createPixel } from './pixel';
+import { createPixelMatrix, createWhitePixelArray, createWhitePixelMatrix } from '../pixel';
 
 function verifyMatrix(colorStringMatrix) {
   if (colorStringMatrix.length === 0) {
@@ -9,20 +9,6 @@ function verifyMatrix(colorStringMatrix) {
     throw TypeError('The rows of the matrix must be of the same length');
   }
 }
-
-const createPixelMatrix = function createPixelMatrix(colorStringMatrix) {
-  return colorStringMatrix.map(row => row.map(elem => createPixel(elem)));
-};
-
-
-export function createWhitePixelArray(size) {
-  return Array.from({length: size}, () => createWhitePixel());
-}
-
-export function createWhitePixelMatrix(numRows, numCols) {
-  return Array.from({length: numRows}, () => createWhitePixelArray(numCols));
-}
-
 
 class Canvas {
   constructor(colorStringMatrix) {
@@ -35,15 +21,15 @@ class Canvas {
     this.pixelMatrix[rowIndex][colIndex] = pixel;
   }
 
-  setRowSize(newNumRows) { // create more rows
-    if (this.numRows < newNumRows) {
-      const whitePixelMatrix = createWhitePixelMatrix(newNumRows - this.numRows, this.numCols);
+  setRowSize(newRowSize) { // create more rows
+    if (this.numRows < newRowSize) {
+      const whitePixelMatrix = createWhitePixelMatrix(newRowSize - this.numRows, this.numCols);
       const extraCanvasPiece = new Canvas(whitePixelMatrix);
       this.pixelMatrix.push(...extraCanvasPiece.pixelMatrix);
     } else {
-      this.pixelMatrix = this.pixelMatrix.slice(0, newNumRows);
+      this.pixelMatrix = this.pixelMatrix.slice(0, newRowSize);
     }
-    this.numRows = newNumRows;
+    this.numRows = newRowSize;
   }
 
   setColumnSize(newColumnSize) {
@@ -57,9 +43,28 @@ class Canvas {
     }
     this.numCols = newColumnSize;
   }
+
+  setDimensions(newRowSize, newColumnSize) {
+    this.setRowSize(newRowSize);
+    this.setColumnSize(newColumnSize);
+  }
+
+  getPixelMatrix() {
+    return this.pixelMatrix;
+  }
 }
 
 export function createCanvas(colorStringMatrix) {
   verifyMatrix(colorStringMatrix);
   return new Canvas(colorStringMatrix);
+}
+
+export function convertToStringMatrix(canvas) {
+  return canvas.getPixelMatrix().map(
+    row => row.map(pixel => pixel.getColor())
+  );
+}
+
+export function copyCanvas(canvas) { // Todo makes sure it returns a deep copy of the matrix
+  return createCanvas(convertToStringMatrix(canvas));
 }
