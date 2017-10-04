@@ -15,8 +15,12 @@ const createPixelMatrix = function createPixelMatrix(colorStringMatrix) {
 };
 
 
+export function createWhitePixelArray(size) {
+  return Array.from({length: size}, () => createWhitePixel());
+}
+
 export function createWhitePixelMatrix(numRows, numCols) {
-  return Array.from({length: numRows}, () => Array.from({length: numCols}, () => 'white'));
+  return Array.from({length: numRows}, () => createWhitePixelArray(numCols));
 }
 
 
@@ -35,19 +39,23 @@ class Canvas {
     if (this.numRows < newNumRows) {
       const whitePixelMatrix = createWhitePixelMatrix(newNumRows - this.numRows, this.numCols);
       const extraCanvasPiece = new Canvas(whitePixelMatrix);
-      this.pixelMatrix.addAll(extraCanvasPiece.pixelMatrix);
+      this.pixelMatrix.push(...extraCanvasPiece.pixelMatrix);
     } else {
       this.pixelMatrix = this.pixelMatrix.slice(0, newNumRows);
     }
+    this.numRows = newNumRows;
   }
 
   setColumnSize(newColumnSize) {
     if (this.numCols < newColumnSize) {
-      this.pixelMatrix.forEach(row => row.append(createWhitePixel(newColumnSize - this.numCols)));
+      this.pixelMatrix.forEach(row =>
+        row.push(...createWhitePixelArray(newColumnSize - this.numCols))
+      );
     } else {
       // Todo optimize
       this.pixelMatrix = this.pixelMatrix.map(row => row.slice(0, newColumnSize));
     }
+    this.numCols = newColumnSize;
   }
 }
 
