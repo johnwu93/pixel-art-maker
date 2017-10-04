@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-export default class ColorView {
+export class ColorView {
   constructor(currentColorController) {
     this.currentColorController = currentColorController;
   }
@@ -12,3 +12,10 @@ export default class ColorView {
     });
   }
 }
+
+const createCurrentColor = function createCurrentPixel() {
+  return $('#colorPicker').val();
+};
+
+
+export { createCurrentColor };

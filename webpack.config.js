@@ -2,7 +2,7 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/scripts/main.js',
+  entry: './src/scripts/designs.js',
   resolve: {
     alias: {
       jquery: 'jquery/src/jquery',

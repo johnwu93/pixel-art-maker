@@ -2,8 +2,8 @@ import { createPixel } from '../models/pixel';
 
 
 export default class CurrentColorController {
-  constructor(currentPixel) {
-    this.myCurrentColor = currentPixel; // pixel
+  constructor(colorString) {
+    this.myCurrentColor = createPixel(colorString);
   }
 
   get currentColor() {

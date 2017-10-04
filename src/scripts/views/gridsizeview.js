@@ -1,40 +1,42 @@
 import $ from 'jquery';
+import { createWhitePixelMatrix } from '../models/pixel';
 
-const extractInputNumberValues = function extractInputNumberValues(inputs, selectorName) {
-  return Number(inputs.filter(selectorName).val());
+const extractInputNumberValues = function extractInputNumberValues(inputs, ...selectorNames) {
+  return selectorNames.map(name => Number(inputs.filter(name).val()));
 };
 
-function extractInputs(sizePickerEvent) {
+const extractInputs = function extractInputs(sizePickerEvent) {
   sizePickerEvent.preventDefault();
   const submitFormElement = $(sizePickerEvent.target);
   return submitFormElement.find('input');
-}
+};
 
-export default class GridSizeView {
+class GridSizeView {
   constructor(canvasView, canvasController) {
     this.canvasView = canvasView;
     this.canvasController = canvasController;
   }
 
-  changeRowSize(inputs) {
-    const newRowColumns = extractInputNumberValues(inputs, '#input_height');
-    this.canvasController.setRowSize(newRowColumns);
+  changeDimensions(inputs) {
+    const [newRowColumns, newColumnNums] = extractInputNumberValues(inputs, '#input_height', '#input_width');
+    this.canvasController.setDimensions(newRowColumns, newColumnNums);
   }
 
-  changeColumnSize(inputs) {
-    const newColumnNums = extractInputNumberValues(inputs, '#input_width');
-    this.canvasController.setColumnSize(newColumnNums);
+  renderSubmitEvent(sizePickerEvent, eventAction) {
+    const inputs = extractInputs(sizePickerEvent);
+    eventAction(inputs);
+    this.canvasView.render();
   }
 
   callListener() {
-    $('#sizePicker').submit((sizePickerEvent) => {
-      const inputs = extractInputs(sizePickerEvent);
-      const newRowColumns = extractInputNumberValues(inputs, '#input_height');
-      const newColumnNums = extractInputNumberValues(inputs, '#input_width');
-
-      this.canvasController.setDimensions(newRowColumns, newColumnNums);
-
-      this.canvasView.render();
-    });
+    $('#sizePicker').submit(event => this.renderSubmitEvent(event, this.changeDimensions.bind(this)));
   }
 }
+
+const initializeMatrix = function initializeMatrix() {
+  const inputs = $('#sizePicker').find('input');
+  const [numRows, numCols] = extractInputNumberValues(inputs, '#input_height', '#input_width');
+  return createWhitePixelMatrix(numRows, numCols);
+};
+
+export { GridSizeView, initializeMatrix };
