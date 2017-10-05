@@ -1,6 +1,6 @@
 import { createPixelMatrix, createWhitePixelArray, createWhitePixelMatrix } from '../pixel';
 
-function verifyMatrix(colorStringMatrix) {
+const verifyMatrix = function verifyMatrix(colorStringMatrix) {
   if (colorStringMatrix.length === 0) {
     throw TypeError('Matrix needs to have a length greater than 0');
   }
@@ -8,7 +8,7 @@ function verifyMatrix(colorStringMatrix) {
   if (!colorStringMatrix.every(row => row.length === numCols)) {
     throw TypeError('The rows of the matrix must be of the same length');
   }
-}
+};
 
 class Canvas {
   constructor(colorStringMatrix) {
@@ -21,7 +21,7 @@ class Canvas {
     this.pixelMatrix[rowIndex][colIndex] = pixel;
   }
 
-  setRowSize(newRowSize) { // create more rows
+  setRowSize(newRowSize) {
     if (this.numRows < newRowSize) {
       const whitePixelMatrix = createWhitePixelMatrix(newRowSize - this.numRows, this.numCols);
       const extraCanvasPiece = new Canvas(whitePixelMatrix);
@@ -38,7 +38,7 @@ class Canvas {
         row.push(...createWhitePixelArray(newColumnSize - this.numCols))
       );
     } else {
-      // Todo optimize
+      // TODO: optimize row concatenation
       this.pixelMatrix = this.pixelMatrix.map(row => row.slice(0, newColumnSize));
     }
     this.numCols = newColumnSize;
@@ -54,17 +54,19 @@ class Canvas {
   }
 }
 
-export function createCanvas(colorStringMatrix) {
+const createCanvas = function createCanvas(colorStringMatrix) {
   verifyMatrix(colorStringMatrix);
   return new Canvas(colorStringMatrix);
-}
+};
 
-export function convertToStringMatrix(canvas) {
+const convertToStringMatrix = function convertToStringMatrix(canvas) {
   return canvas.getPixelMatrix().map(
     row => row.map(pixel => pixel.getColor())
   );
-}
+};
 
-export function copyCanvas(canvas) { // Todo makes sure it returns a deep copy of the matrix
+const copyCanvas = function copyCanvas(canvas) {
   return createCanvas(convertToStringMatrix(canvas));
-}
+};
+
+export { createCanvas, convertToStringMatrix, copyCanvas };

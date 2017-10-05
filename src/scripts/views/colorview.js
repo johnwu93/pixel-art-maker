@@ -17,5 +17,4 @@ const createCurrentColor = function createCurrentPixel() {
   return $('#colorPicker').val();
 };
 
-
 export { createCurrentColor };

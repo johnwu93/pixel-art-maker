@@ -18,18 +18,17 @@ class GridSizeView {
   }
 
   changeDimensions(inputs) {
-    const [newRowColumns, newColumnNums] = extractInputNumberValues(inputs, '#input_height', '#input_width');
+    const newRowColumns = extractInputNumberValues(inputs, '#input_height');
+    const newColumnNums = extractInputNumberValues(inputs, '#input_width');
     this.canvasController.setDimensions(newRowColumns, newColumnNums);
   }
 
-  renderSubmitEvent(sizePickerEvent, eventAction) {
-    const inputs = extractInputs(sizePickerEvent);
-    eventAction(inputs);
-    this.canvasView.render();
-  }
-
   callListener() {
-    $('#sizePicker').submit(event => this.renderSubmitEvent(event, this.changeDimensions.bind(this)));
+    $('#sizePicker').submit((sizePickerEvent) => {
+      const inputs = extractInputs(sizePickerEvent);
+      this.changeDimensions(inputs);
+      this.canvasView.render();
+    });
   }
 }
 

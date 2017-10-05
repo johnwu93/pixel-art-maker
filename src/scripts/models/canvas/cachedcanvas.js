@@ -13,7 +13,7 @@ class CachedCanvas {
     this.currentCanvas = copyCanvas(this.savedCanvas);
   }
 
-  setRowSize(newRowSize) { // create more rows
+  setRowSize(newRowSize) {
     this.currentCanvas = copyCanvas(this.savedCanvas);
     this.currentCanvas.setRowSize(newRowSize);
   }

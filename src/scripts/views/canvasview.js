@@ -11,7 +11,6 @@ const parseIndex = function getIndex(classValue) {
   return classValue.split('_').map(Number);
 };
 
-
 export default class CanvasView {
   constructor(canvasController, currentColorController) {
     this.canvasController = canvasController;
@@ -19,11 +18,12 @@ export default class CanvasView {
   }
 
   render() {
-    const cavasMatrix = this.canvasController.getCanvas();
-    const tableHTMLString = cavasMatrix
+    // TODO: optimize rendering so that the entire tables doesn't need to be rendered
+    const canvasMatrix = this.canvasController.getCanvas();
+    const tableHTMLString = canvasMatrix
       .map((row, rowIdx) => `<tr>\n  ${renderRow(row, rowIdx)}\n  </tr>`)
       .join('\n');
-    $('#pixel_canvas').html(tableHTMLString); // Todo profile this
+    $('#pixel_canvas').html(tableHTMLString);
   }
 
   changeColor(rowIdx, columnIdx) {

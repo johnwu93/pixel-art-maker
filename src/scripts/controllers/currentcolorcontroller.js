@@ -1,6 +1,5 @@
 import { createPixel } from '../models/pixel';
 
-
 export default class CurrentColorController {
   constructor(colorString) {
     this.myCurrentColor = createPixel(colorString);
