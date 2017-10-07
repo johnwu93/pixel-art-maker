@@ -1,22 +1,15 @@
 import $ from 'jquery';
 
-import { createCanvas } from './models/canvas/canvas';
-import createCachedCanvas from './models/canvas/cachedcanvas';
-import CanvasController from './controllers/canvascontroller';
-import CurrentColorController from './controllers/currentcolorcontroller';
 import CanvasView from './views/canvasview';
 import { ColorView, createCurrentColor } from './views/colorview';
-import { GridSizeView, initializeMatrix } from './views/gridsizeview';
+import { GridSizeView, getInitialSize } from './views/gridsizeview';
+import { createCanvasController, createCurrentColorController } from './controllers/controllerinitializer';
 
 function makeGrid() {
   const currentColor = createCurrentColor();
-
-  const pixelMatrix = initializeMatrix();
-  const canvas = createCanvas(pixelMatrix);
-  const cachedCanvas = createCachedCanvas(canvas);
-
-  const canvasController = new CanvasController(cachedCanvas);
-  const currentColorController = new CurrentColorController(currentColor);
+  const currentColorController = createCurrentColorController(currentColor);
+  const [numRows, numCols] = getInitialSize();
+  const canvasController = createCanvasController(numRows, numCols);
 
   const canvasView = new CanvasView(canvasController, currentColorController);
   canvasView.render();
