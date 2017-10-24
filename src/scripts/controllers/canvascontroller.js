@@ -1,17 +1,14 @@
-import { createPixel } from '../models/pixel';
-import { convertToStringMatrix } from '../models/canvas/canvas';
+import { createPixel, createWhitePixelMatrix } from '../models/pixel';
+import { convertToStringMatrix, createCanvas } from '../models/canvas';
 
+/**
+ * @description Controller to manipulate the site's canvas
+ * @constructor
+ * @param {Canvas}
+ */
 export default class CanvasController {
   constructor(canvasModel) {
     this.canvasModel = canvasModel;
-  }
-
-  setColumnSize(columnSize) {
-    this.canvasModel.setColumnSize(columnSize);
-  }
-
-  setRowSize(rowSize) {
-    this.canvasModel.setRowSize(rowSize);
   }
 
   setPixel(rowIndex, colIndex, colorString) {
@@ -19,7 +16,8 @@ export default class CanvasController {
   }
 
   setDimensions(rowSize, columnSize) {
-    this.canvasModel.setDimensions(rowSize, columnSize);
+    const pixelMatrix = createWhitePixelMatrix(rowSize, columnSize);
+    this.canvasModel = createCanvas(pixelMatrix);
   }
 
   getCanvas() {

@@ -11,6 +11,15 @@ const parseIndex = function getIndex(classValue) {
   return classValue.split('_').map(Number);
 };
 
+/**
+ * @description Renders the canvas model. It will sends commands to manipulate the state of
+ * the models. The view will manually update it's corresponding to the commands it sends.
+ * As a result, the model will not communicate with the view or the controller in this
+ * implementation.
+ * @constructor
+ * @param {CanvasController} canvasController -
+ * @param {CurrentColorController} currentColorController -
+ */
 export default class CanvasView {
   constructor(canvasController, currentColorController) {
     this.canvasController = canvasController;
@@ -18,7 +27,6 @@ export default class CanvasView {
   }
 
   render() {
-    // TODO: optimize rendering so that the entire tables doesn't need to be rendered
     const canvasMatrix = this.canvasController.getCanvas();
     const tableHTMLString = canvasMatrix
       .map((row, rowIdx) => `<tr>\n  ${renderRow(row, rowIdx)}\n  </tr>`)
@@ -30,7 +38,7 @@ export default class CanvasView {
     this.canvasController.setPixel(rowIdx, columnIdx, this.currentColorController.currentColor);
   }
 
-  callListener() {
+  bindPixelClick() {
     $('#pixel_canvas').on('click', 'td', (event) => {
       const tableElement = $(event.target);
       const stringId = tableElement.attr('class');

@@ -1,3 +1,7 @@
+/**
+ * @description A representation of a Pixel
+ */
+
 class Pixel {
   constructor(colorString) {
     this.colorString = colorString;
@@ -8,6 +12,8 @@ class Pixel {
   }
 }
 
+/** Factory methods for pixels
+ */
 const createPixel = function createPixel(color) {
   return new Pixel(color);
 };

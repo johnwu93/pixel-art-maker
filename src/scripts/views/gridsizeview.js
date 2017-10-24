@@ -8,6 +8,10 @@ const extractInputs = function extractInputs(sizePickerQuery) {
   return $(sizePickerQuery).find('input');
 };
 
+/**
+ * @description View of that manipulates the Grid Size. It will send commands to the controller to
+ * change the size of the matrix. Then, it will rerender the CanvasView.
+ */
 class GridSizeView {
   constructor(canvasView, canvasController) {
     this.canvasView = canvasView;

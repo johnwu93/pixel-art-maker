@@ -5,6 +5,9 @@ import { ColorView, createCurrentColor } from './views/colorview';
 import { GridSizeView, getInitialSize } from './views/gridsizeview';
 import { createCanvasController, createCurrentColorController } from './controllers/controllerinitializer';
 
+/**
+ * @description Setting up pixel maker
+ */
 function makeGrid() {
   const currentColor = createCurrentColor();
   const currentColorController = createCurrentColorController(currentColor);
@@ -13,10 +16,10 @@ function makeGrid() {
 
   const canvasView = new CanvasView(canvasController, currentColorController);
   canvasView.render();
-  canvasView.callListener();
+  canvasView.bindPixelClick();
 
   const colorView = new ColorView(currentColorController);
-  colorView.callListener();
+  colorView.bindColorChange();
 
   const gridSizeView = new GridSizeView(canvasView, canvasController);
   gridSizeView.callListener();
